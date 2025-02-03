@@ -1,0 +1,37 @@
+import random
+
+class SecurityAgent:
+    def __init__(self):
+        self.components = {key: self.random_vulnerability() for key in 'ABCDEFGHI'}
+    
+    def random_vulnerability(self):
+        return random.choice(['safe', 'low risk', 'high risk'])
+    
+    def display_system(self, title):
+        print(f"\n{title}")
+        for component, status in self.components.items():
+            print(f"{component}: {status}")
+    
+    def scan_system(self):
+        print("\nscanning system...")
+        for component, status in self.components.items():
+            print(f"{component} is {'safe' if status == 'safe' else f'warning: {component} has a {status} vulnerability.'}")
+    
+    def patch_vulnerabilities(self):
+        print("\npatching vulnerabilities...")
+        for component, status in self.components.items():
+            if status == 'low risk':
+                self.components[component] = 'safe'
+                print(f"patched: {component} is now safe.")
+            elif status == 'high risk':
+                print(f"{component} requires premium service to patch.")
+    
+    def run_security_check(self):
+        self.display_system("initial system state")
+        self.scan_system()
+        self.patch_vulnerabilities()
+        self.display_system("final system state")
+
+if __name__ == "__main__":
+    agent = SecurityAgent()
+    agent.run_security_check()
