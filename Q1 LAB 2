@@ -1,0 +1,29 @@
+import random
+
+components = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+
+system_state = {component: random.choice(['safe', 'vulnerable']) for component in components}
+
+
+print("Initial System Check:")
+for component, status in system_state.items():
+    print(f"Component {component}: {status}")
+
+plist = []
+print("\nSystem Scan:")
+for component, status in system_state.items():
+    if status == 'vulnerable':
+        print(f"Warning: Component {component} is vulnerable.")
+        plist.append(component)
+    else:
+        print(f"Success: Component {component} is secure.")
+
+print("\nPatching Vulnerabilities:")
+for component in plist:
+    system_state[component] = 'safe'
+    print(f"Component {component} has been patched.")
+
+
+print("\nFinal System Check:")
+for component, status in system_state.items():
+    print(f"Component {component}: {status}")
