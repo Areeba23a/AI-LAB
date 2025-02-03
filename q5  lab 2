@@ -1,0 +1,36 @@
+import random
+
+class hospital_delivery_robot:
+    def __init__(self):
+        self.location = "storage"
+        self.medicine = None
+
+    def move_to(self, destination):
+        self.location = destination
+        print(f"moving to {destination}")
+
+    def pick_up_medicine(self, medicine):
+        self.medicine = medicine
+        print(f"picked up {medicine}")
+
+    def deliver_medicine(self, patient_room):
+        if self.medicine:
+            print(f"delivered {self.medicine} to {patient_room}")
+            self.medicine = None
+        else:
+            print("no medicine to deliver")
+
+    def scan_patient_id(self):
+        print("patient id scanned")
+
+    def alert_staff(self):
+        print("alerting staff for assistance")
+
+robot = hospital_delivery_robot()
+robot.move_to("medicine storage")
+robot.pick_up_medicine("painkillers")
+robot.move_to("room 101")
+robot.scan_patient_id()
+robot.deliver_medicine("room 101")
+robot.move_to("nurse station")
+robot.alert_staff()
