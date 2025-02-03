@@ -1,0 +1,26 @@
+import random
+
+servers = ['a', 'b', 'c', 'd', 'e']
+
+server_state = {server: random.choice(['underloaded', 'balanced', 'overloaded']) for server in servers}
+
+print("initial server load:")
+for server, status in server_state.items():
+    print(f"server {server}: {status}")
+
+
+underloaded = [server for server, load in server_state.items() if load == "underloaded"]
+overloaded = [server for server, load in server_state.items() if load == "overloaded"]
+
+print("\nbalancing load:")
+while overloaded and underloaded:
+    ol = overloaded.pop()
+    ul = underloaded.pop()
+    server_state[ol] = "underloaded"
+    server_state[ul] = "overloaded"
+    print(f"moved tasks from {ol} to {ul} to balance the load.")
+
+
+print("\nfinal server load states:")
+for server, load in server_state.items():
+    print(f"{server}: {load}")
