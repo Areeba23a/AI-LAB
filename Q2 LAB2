@@ -1,0 +1,46 @@
+import random
+
+class backupmanagementagent:
+    def __init__(self):
+        self.status = {'Completed': 10, 'Failed': -10}
+
+    def check_status(self, backup):
+        return self.status[backup]
+
+    def retry_backup(self, backup):
+        if backup == 'Failed':
+            return 'Completed'
+        return backup
+
+    def process_backup(self, backup):
+        return self.retry_backup(backup)
+
+class backupsystem:
+    def __init__(self, num_tasks=5):
+        self.tasks = {f"Task-{i+1}": random.choice(['Completed', 'Failed']) for i in range(num_tasks)}
+
+    def get_backup_status(self):
+        return self.tasks
+
+    def retry_failed_backups(self):
+        for task, status in self.tasks.items():
+            if status == 'Failed':
+                self.tasks[task] = 'Completed'
+
+
+backup_system = backupsystem()
+agent = backupmanagementagent()
+
+
+print("Initial Backup Statuses:")
+for task, status in backup_system.get_backup_status().items():
+    print(f"{task}: {status}")
+
+
+print("\nRetrying Failed Backups:")
+backup_system.retry_failed_backups()
+
+
+print("\nFinal Backup Statuses:")
+for task, status in backup_system.get_backup_status().items():
+    print(f"{task}: {status}")
