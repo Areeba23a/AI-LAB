@@ -1,0 +1,45 @@
+class UCSAgent:
+   def __init__(self, graph, goal):
+       self.graph = graph
+       self.goal = goal
+
+
+   def uniform_cost_search(self, start):
+       queue = [(0, start, [])]
+       visited = set()
+
+
+       while queue:
+           queue.sort() 
+           cost, node, path = queue.pop(0)
+          
+           if node in visited:
+               continue
+          
+           visited.add(node)
+           path.append(node)
+          
+           if node == self.goal:
+               return path, cost
+          
+           for neighbor, weight in self.graph.get(node, []):
+               queue.append((cost + weight, neighbor, path.copy()))
+      
+       return None, float("inf")
+
+
+graph = {
+   'A': [('B', 1), ('C', 4)],
+   'B': [('D', 2), ('E', 5)],
+   'C': [('F', 3)],
+   'D': [],
+   'E': [('H', 2)],
+   'F': [],
+   'G': [],
+   'H': []
+}
+
+
+ucs_agent = UCSAgent(graph, 'H')
+path, cost = ucs_agent.uniform_cost_search('A')
+print("Path:", path, "Cost:", cost)
