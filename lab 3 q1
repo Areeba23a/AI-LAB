@@ -1,0 +1,35 @@
+class GBA:
+    def __init__(self, graph, goal, depth_limit):
+        self.graph = graph
+        self.goal = goal
+        self.depth_limit = depth_limit
+
+    def depth_limited_search(self, node, depth):
+        if node == self.goal:
+            return [node]
+        if depth == 0:
+            return None
+        
+        for neighbor in self.graph.get(node, []):
+            path = self.depth_limited_search(neighbor, depth - 1)
+            if path:
+                return [node] + path
+        return None
+
+    def search(self, start):
+        return self.depth_limited_search(start, self.depth_limit)
+
+graph = {
+    'A': ['B', 'C'], 
+    'B': ['D', 'E'], 
+    'C': ['F', 'G'], 
+    'D': [],
+    'E': ['H'], 
+    'F': [], 
+    'G': [], 
+    'H': []
+}
+
+gba = GBA(graph, 'H', 3)
+path = gba.search('A')
+print("Path found:", path)
