@@ -1,0 +1,35 @@
+def bfs(grid, start, goal):
+    rows, cols = len(grid), len(grid[0])
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+    queue = [(start, [start])]
+    visited = set()
+    visited.add(start)
+    
+    while queue:
+        current, path = queue.pop(0)  # Use list instead of deque
+        if current == goal:
+            return path  # Return the shortest path
+        
+        x, y = current
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == 0 and (nx, ny) not in visited:
+                queue.append(((nx, ny), path + [(nx, ny)]))
+                visited.add((nx, ny))
+    
+    return None  # No path found
+
+# Example Grid (0 = open area, 1 = obstacle, S = start, G = goal)
+grid = [
+    [0, 0, 1, 0, 0],
+    [0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0],
+    [0, 0, 0, 1, 0],
+    [1, 1, 0, 0, 0]
+]
+
+start = (0, 0)  # 'S' position
+goal = (4, 4)  # 'G' position
+
+path = bfs(grid, start, goal)
+print("Shortest Path:", path if path else "No Path Found")
